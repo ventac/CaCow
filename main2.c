@@ -144,7 +144,7 @@ int main( int argc, char * argv[] ) {
         m_renderer = SDL_CreateRenderer(m_window, -1,
             SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
        
-        SDL_SetWindowTitle(m_window, "CaCow");
+        SDL_SetWindowTitle(m_window, "CaCOW");
         //SDL_SetWindowIcon
 
         
@@ -164,16 +164,22 @@ int main( int argc, char * argv[] ) {
                     case SDLK_ESCAPE:
                         isOpen = false;
                         break;
-                    case SDLK_RETURN:
+                    case SDLK_RETURN:  // Si clique dans le button de start
                         inMenu = false;
                         inGame = true;
                     }
                 }
-            }         
+            }   
+
+            /*EXECUÇÃO DO MENU AQUI*/
+            
+            SDL_SetRenderDrawColor(m_renderer, 25, 25, 25, 255);
+            SDL_RenderClear(m_renderer);
+            SDL_RenderPresent(m_renderer);
+
         }
 
-        // Si clique dans le button de start
-        inGame = true;
+        
 
         while (isOpen && inGame)
         {        
