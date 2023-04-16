@@ -10,6 +10,7 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
+                //"-lSDL2 -lSDL2_mixer",
                 "-F",
                 "/Library/Frameworks",
                 "-framework",

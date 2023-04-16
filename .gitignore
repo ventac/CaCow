@@ -2,3 +2,6 @@ AssistenteDeVendas-Alpha-Version.py
 AssistenteDeVendas-Alpha-Version.spec
 dist
 build
+Music/cow.mp3
+tester.dSYM/Contents/Resources/DWARF/tester
+notes.txt

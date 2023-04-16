@@ -2,31 +2,64 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
+
 #include "defs.h"
 #include "listes.c"
 
-void draw(SDL_Renderer * m_renderer) {
-    // Clear the window with a black background SDL_SetRenderDrawColor( m_renderer, 0, 0, 0, 255 ); SDL_RenderClear( m_renderer );
-    // Show the window SDL_RenderPresent( m_renderer );
-    int rgb[] = { 203, 203, 203, // Gray 254, 254, 31, // Yellow
-                0, 255, 255, // Cyan
-                0, 254, 30, // Green 255, 16, 253, // Magenta 253, 3, 2, // Red
-                18, 14, 252, // Blue 0, 0, 0 //Black
-                };
-    SDL_Rect colorBar;
+// Pour afficher du texte
+#include <SDL2_image/SDL_image.h>
+#include <SDL2_ttf/SDL_ttf.h>
+//#include <string.h>
 
-    colorBar.x = 0; colorBar.y = 0; colorBar.w = 90; colorBar.h = 480;
+/*bool chargerImage();
 
-    // Render a new color bar every 0.5 seconds
-    for ( int i = 0; i != sizeof rgb / sizeof *rgb; i += 3, colorBar.x += 90 )
-    {
-        SDL_SetRenderDrawColor( m_renderer, rgb[i], rgb[i + 1], rgb[i + 2], 255 ); 
-        SDL_RenderFillRect( m_renderer, &colorBar );
-        SDL_RenderPresent( m_renderer );
-        SDL_Delay( 500 );
-    } 
+
+bool chargerImage(SDL_Renderer * gRenderer)
+{
+	//Loading success flag
+	bool success = true;
+
+	//Load PNG texture
+	void * gTexture = loadTexture( "IMG/quadra.bmp" ,);
+	if( gTexture == NULL )
+	{
+		printf( "Failed to load texture image!\n" );
+		success = false;
+	}
+
+	return success;
 }
 
+
+SDL_Texture* loadTexture(const char* path, SDL_Renderer * gRenderer)
+{
+	//The final texture
+	SDL_Texture* newTexture = NULL;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load(path);
+	if( loadedSurface == NULL )
+	{
+		printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
+	}
+	else
+	{
+		//Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+		if( newTexture == NULL )
+		{
+			printf( "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError() );
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface( loadedSurface );
+	}
+
+	return newTexture;
+}
+*/
+/// @brief Dessine un tableau, c'etait juste un test pour apprendre à utiliser SDL
+/// @param m_renderer 
 void drawGrid(SDL_Renderer * m_renderer){
     // Définir la taille des carrés :
     SDL_Rect rectangle;
@@ -43,8 +76,6 @@ void drawGrid(SDL_Renderer * m_renderer){
         }
         ligne+=rh - dist;
     }
-
-
 }
 
 void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
@@ -101,14 +132,16 @@ int main( int argc, char * argv[] ) {
     SDL_Point point;
     
     // PLAYER 1
-    Player player1;
-    Position derniereP1;
-    Liste * CacaP1 = initialisation();
-    player1.position.x = 0;
-    player1.position.y = 0;
+        Player player1;
+        Position derniereP1;
+        Liste * CacaP1 = initialisation();
 
-    derniereP1.x = 0;
-    derniereP1.y = 0;
+        // Position
+        player1.initPos.x = X_INIT_P1;
+        player1.initPos.y = Y_INIT_P1;
+        player1.position = player1.initPos;
+        derniereP1.x = 0;
+        derniereP1.y = 0;
 
     // PLAYER 2
     Player player2;
@@ -116,6 +149,7 @@ int main( int argc, char * argv[] ) {
     Liste * CacaP2 = initialisation();
     player2.position.x = SCREEN_WIDTH - SPEED;
     player2.position.y = SCREEN_HEIGHT - SPEED;
+    player2.initPos = player2.position;
     player2.r=255;
     player2.g=255;
     player2.b=255;
@@ -126,6 +160,11 @@ int main( int argc, char * argv[] ) {
     bool isOpen = true;
     bool inGame = false;
     bool inMenu = true;
+
+    // Texte
+    SDL_Surface * texte;
+    
+
 
     // DEMARRAGE DE SDL
     if (SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) == -1)    
@@ -171,8 +210,8 @@ int main( int argc, char * argv[] ) {
                 }
             }   
 
-            /*EXECUÇÃO DO MENU AQUI*/
-            
+            //EXECUÇÃO DO MENU AQUI
+            // Afficher imgage menu
             SDL_SetRenderDrawColor(m_renderer, 25, 25, 25, 255);
             SDL_RenderClear(m_renderer);
             SDL_RenderPresent(m_renderer);
@@ -180,7 +219,7 @@ int main( int argc, char * argv[] ) {
         }
 
         
-
+        // Affichage du jeux
         while (isOpen && inGame)
         {        
             while (SDL_PollEvent(&events))
@@ -253,8 +292,10 @@ int main( int argc, char * argv[] ) {
                 if (derniereP2.x != player2.position.x || 
                     derniereP2.y != player2.position.y)
                     // Et si la difference est supérieure à width/length de l'objet
-                {
-                    insertion(CacaP2,player2.position.x,player2.position.y);
+                {                       
+                    if (rand() % 4 + 1 == 1){ // Pas toujours faire caca
+                        insertion(CacaP2,player2.position.x,player2.position.y);
+                    }                  
                 }
 
                 // Insérer que si la position a changé
@@ -262,8 +303,25 @@ int main( int argc, char * argv[] ) {
                     derniereP1.y != player1.position.y)
                     // Et si la difference est supérieure à width/length de l'objet
                 {
+                    if (rand() % 4 + 1 == 1){ // Pas toujours faire caca
                     insertion(CacaP1,player1.position.x,player1.position.y);
+                    }
                 }
+
+                // Colision avec la caca
+                // Se jogador p1 comeu cocô p1
+                // "Voce comeu seu proprio cocô"
+                if (
+                    //AtePoo(&player1,CacaP1) ||
+                    AtePoo(&player1,CacaP2) ||
+                    //||
+                    AtePoo(&player2,CacaP1) 
+                    //|| AtePoo(&player2,CacaP2)
+                    )
+                {
+                    isOpen = false;
+                }
+
 
                 // Effacer objet de la liste si supérieur que la taille souhaité
 
@@ -296,13 +354,6 @@ int main( int argc, char * argv[] ) {
     }
 
 
-    // Forçar a janela a continuar aberta
-    //SDL_Event e; bool quit = false; while( quit == false ){ while( SDL_PollEvent( &e ) ){ if( e.type == SDL_QUIT ) quit = true; } }
-    /*
-    
-    
-    SDL_DestroyWindow( m_window ); SDL_DestroyRenderer( m_renderer ); SDL_Quit();
-    */
 
 
 

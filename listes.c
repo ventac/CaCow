@@ -38,10 +38,7 @@ void insertion(Liste *liste, int x, int y)
     nouveau->caca.position.y = y;
     qttCarees++;
 
-    if(qttCarees>5){
-        //suppression(liste);
-    }
-
+    
     /* Insertion de l'ÈlÈment au dÈbut de la liste */
     nouveau->suivant = liste->premier;
     liste->premier = nouveau;
@@ -78,6 +75,29 @@ void afficherListe(SDL_Renderer * m_renderer,Liste *liste)
         actuel = actuel->suivant;
     }
     printf("NULL\n");
+}
+
+bool AtePoo(Player* player,Liste *liste){
+    if (liste == NULL)    
+        exit(EXIT_FAILURE);
+
+    Element *actuel = liste->premier;
+    
+    while (actuel != NULL)
+    {
+        if (((player->position.x == actuel->caca.position.x)
+         && (player->position.y == actuel->caca.position.y))
+         && 
+         ((player->position.x != player->initPos.x)
+         && (player->position.y != player->initPos.y))) // et la position est differente de l'initialle
+        
+         {
+            return true;
+         }
+        actuel = actuel->suivant;
+    }
+    return false;
+
 }
 
 

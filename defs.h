@@ -12,6 +12,10 @@
 #define LEFT 3
 #define RIGHT 4
 #define N_FRAMES_PER_MOVEMENT 10
+#define X_INIT_P1 0
+#define Y_INIT_P1 0
+
+
 
 /*
 struct Coleurs{
@@ -30,7 +34,8 @@ struct Position{
 };
 
 struct Player{
-    Position position;  // Devo fazer position
+    Position initPos;
+    Position position;
     int direction;
     int r,g,b;
 };
