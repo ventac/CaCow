@@ -107,7 +107,7 @@ SDL_Surface* chargerSurface(char* chemin)
 
     return surfaceOptimisee;
 }
-
+ 
 
 
 bool loadMedia()

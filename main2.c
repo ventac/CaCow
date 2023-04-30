@@ -6,58 +6,10 @@
 #include "defs.h"
 #include "listes.c"
 
-// Pour afficher du texte
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
-//#include <string.h>
-
-/*bool chargerImage();
 
 
-bool chargerImage(SDL_Renderer * gRenderer)
-{
-	//Loading success flag
-	bool success = true;
-
-	//Load PNG texture
-	void * gTexture = loadTexture( "IMG/quadra.bmp" ,);
-	if( gTexture == NULL )
-	{
-		printf( "Failed to load texture image!\n" );
-		success = false;
-	}
-
-	return success;
-}
 
 
-SDL_Texture* loadTexture(const char* path, SDL_Renderer * gRenderer)
-{
-	//The final texture
-	SDL_Texture* newTexture = NULL;
-
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load(path);
-	if( loadedSurface == NULL )
-	{
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
-	}
-	else
-	{
-		//Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-		if( newTexture == NULL )
-		{
-			printf( "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError() );
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface( loadedSurface );
-	}
-
-	return newTexture;
-}
-*/
 /// @brief Dessine un tableau, c'etait juste un test pour apprendre à utiliser SDL
 /// @param m_renderer 
 void drawGrid(SDL_Renderer * m_renderer){
@@ -160,10 +112,6 @@ int main( int argc, char * argv[] ) {
     bool isOpen = true;
     bool inGame = false;
     bool inMenu = true;
-
-    // Texte
-    SDL_Surface * texte;
-    
 
 
     // DEMARRAGE DE SDL
@@ -314,7 +262,6 @@ int main( int argc, char * argv[] ) {
                 if (
                     //AtePoo(&player1,CacaP1) ||
                     AtePoo(&player1,CacaP2) ||
-                    //||
                     AtePoo(&player2,CacaP1) 
                     //|| AtePoo(&player2,CacaP2)
                     )
@@ -352,10 +299,6 @@ int main( int argc, char * argv[] ) {
        SDL_DestroyRenderer(m_renderer);
        SDL_Quit();
     }
-
-
-
-
 
     return EXIT_SUCCESS;
 }
