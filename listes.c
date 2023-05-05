@@ -60,7 +60,7 @@ void suppression(Liste *liste)
     }
 }
 
-void afficherListe(SDL_Renderer * m_renderer,Liste *liste,)
+void afficherListe(SDL_Renderer * m_renderer,Liste *liste,SDL_Window * m_window)
 {
     if (liste == NULL)
     {
@@ -71,7 +71,7 @@ void afficherListe(SDL_Renderer * m_renderer,Liste *liste,)
 
     while (actuel != NULL)
     {
-        FaireCaca(m_renderer,&actuel->caca);
+        FaireCaca(m_renderer,&actuel->caca,m_window);
         actuel = actuel->suivant;
     }
     printf("NULL\n");

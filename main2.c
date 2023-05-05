@@ -280,8 +280,8 @@ int main( int argc, char * argv[] ) {
 
                 // Grid
                 //drawGrid(m_renderer);           
-                afficherListe(m_renderer,CacaP2);                         
-                afficherListe(m_renderer,CacaP1);
+                afficherListe(m_renderer,CacaP2,m_window);                         
+                afficherListe(m_renderer,CacaP1,m_window);
                 DrawPlayer(m_renderer, &player2); 
                 DrawPlayer(m_renderer, &player1);           
                 
