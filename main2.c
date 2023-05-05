@@ -273,8 +273,10 @@ int main( int argc, char * argv[] ) {
                 // Effacer objet de la liste si supérieur que la taille souhaité
 
                 // NETTOYAGE ÉCRAN (sem isso a tela cria um artefato feio)
-                SDL_SetRenderDrawColor(m_renderer, 0x46, 0xA5, 0x3B, 0xFF);
+                // SDL_SetRenderDrawColor(m_renderer, 0x46, 0xA5, 0x3B, 0xFF); // Desenha o fundo de uma cor só
+                
                 SDL_RenderClear(m_renderer);
+                SetBackground(m_renderer,"/Users/guilhermeventapane/Desktop/ProjetTron/IMG/grama.bmp");
 
                 // TRAITEMENT                
 
@@ -289,6 +291,7 @@ int main( int argc, char * argv[] ) {
                 
                 // AFFICHAGE                
                 SDL_RenderPresent(m_renderer); // mise à jour de la fenêtre PRESENTER
+                SDL_DestroyTexture(gTextura);
         
         }
     }
@@ -297,6 +300,7 @@ int main( int argc, char * argv[] ) {
     if (isOpen == false){
        SDL_DestroyWindow(m_window);
        SDL_DestroyRenderer(m_renderer);
+       SDL_FreeSurface(gTextura);
        SDL_Quit();
     }
 

@@ -99,17 +99,27 @@ bool AtePoo(Player* player,Liste *liste){
     return false;
 }
 
- //The image we will load and show on the screen
-    SDL_Surface* gHelloWorld = NULL;
+//Loads media
+bool loadMedia(char * src);
 
-bool loadMedia()
+//Loads individual image as texture
+//SDL_Texture* loadTexture( char * path );
+
+//Current displayed texture
+//SDL_Texture* gTexture = NULL;
+
+//The image we will load and show on the screen
+SDL_Surface* gTextura = NULL;
+
+bool loadMedia(char * src)
 {
 	//Loading success flag
 	bool success = true;
 
 	//Load splash image
-	gHelloWorld = SDL_LoadBMP( "hello_world.bmp" );
-	if( gHelloWorld == NULL )
+	//gTextura = SDL_LoadBMP( "hello_world.bmp" );
+    gTextura = SDL_LoadBMP(src);
+	if( gTextura == NULL )
 	{
 		printf( "Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError() );
 		success = false;
@@ -118,8 +128,22 @@ bool loadMedia()
 	return success;
 }
 
+void SetBackground(SDL_Renderer * m_renderer, char* src){
+    if(!loadMedia(src))
+        {
+            printf( "Failed to load media!\n" );
+        }
+        else
+        {
+            //SDL_CreateSur
+            //rectangle = {caca->position.x,caca->position.y,PLAYER_WIDTH,PLAYER_HEIGHT};
+            SDL_Texture* image_surface = SDL_CreateTextureFromSurface(m_renderer, gTextura);
+            SDL_RenderCopy(m_renderer, image_surface, NULL, NULL);
+    }
+}
 
-/// PAREI AQUI
+
+/*
 void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
 
     SDL_Rect rectangle;
@@ -128,45 +152,30 @@ void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
     int dist = 0; // Distance entre les rectangles
 
 
-    if( !loadMedia() )
+    if(!loadMedia("hello_world.bmp"))
     {
         printf( "Failed to load media!\n" );
     }
     else
     {
-        //Apply the image
-        //SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
-
-
-            // SDL_Rect srcrect = { 0, 0, 100, 100 };
-            // SDL_Rect dstrect = { caca->position.x, caca->position.y, PLAYER_WIDTH, PLAYER_HEIGHT };
-
-            // //Apply the image
-            // SDL_BlitSurface( gHelloWorld, &srcrect, m_renderer, &dstrect );
-            
-            //Update the surface
-            //SDL_UpdateWindowSurface( m_renderer );
-
+        //SDL_CreateSur
+        //rectangle = {caca->position.x,caca->position.y,PLAYER_WIDTH,PLAYER_HEIGHT};
+        rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
+        SDL_Texture* image_surface = SDL_CreateTextureFromSurface(m_renderer, gTextura);
+        SDL_RenderCopy(m_renderer, image_surface, NULL, &rectangle);
 	}
+}
+*/
 
 
+void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
+    SDL_Rect rectangle;
+    int rw = PLAYER_WIDTH;  // Width rectangle
+    int rh = PLAYER_HEIGHT;  // Height rectangle
+    int dist = 0; // Distance entre les rectangles
 
     // Dessiner la caca
     SDL_SetRenderDrawColor(m_renderer,165,110,59,255);
     rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
     SDL_RenderFillRect(m_renderer,&rectangle);
 }
-
-
-
-// void FaireCaca(SDL_Renderer * m_renderer, Player* caca){
-//     SDL_Rect rectangle;
-//     int rw = PLAYER_WIDTH;  // Width rectangle
-//     int rh = PLAYER_HEIGHT;  // Height rectangle
-//     int dist = 0; // Distance entre les rectangles
-
-//     // Dessiner la caca
-//     SDL_SetRenderDrawColor(m_renderer,165,110,59,255);
-//     rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
-//     SDL_RenderFillRect(m_renderer,&rectangle);
-// }
