@@ -30,6 +30,7 @@ void drawGrid(SDL_Renderer * m_renderer){
     }
 }
 
+/*
 void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
     SDL_Rect rectangle;
     int rw = PLAYER_WIDTH;  // Width rectangle
@@ -40,7 +41,18 @@ void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
     rectangle.x = player->position.x; rectangle.y = player->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
     SDL_RenderFillRect(m_renderer,&rectangle);
 }
+*/
 
+void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
+    SDL_Rect rectangle;
+    int rw = PLAYER_WIDTH;  // Width rectangle
+    int rh = PLAYER_HEIGHT;  // Height rectangle
+    int dist = 0; // Distance entre les rectangles
+
+    SDL_SetRenderDrawColor(m_renderer,player->r,player->g,player->b,255);
+    rectangle.x = player->position.x; rectangle.y = player->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
+    SDL_RenderFillRect(m_renderer,&rectangle);
+}
 
 
 void MovePlayer(Player* player){
@@ -276,7 +288,7 @@ int main( int argc, char * argv[] ) {
                 // SDL_SetRenderDrawColor(m_renderer, 0x46, 0xA5, 0x3B, 0xFF); // Desenha o fundo de uma cor só
                 
                 SDL_RenderClear(m_renderer);
-                SetBackground(m_renderer,"/Users/guilhermeventapane/Desktop/ProjetTron/IMG/grama.bmp");
+                SetBackground(m_renderer,"/IMG/grama.bmp");
 
                 // TRAITEMENT                
 
@@ -291,8 +303,7 @@ int main( int argc, char * argv[] ) {
                 
                 // AFFICHAGE                
                 SDL_RenderPresent(m_renderer); // mise à jour de la fenêtre PRESENTER
-                SDL_DestroyTexture(gTextura);
-        
+                SDL_DestroyTexture(txtTextura);
         }
     }
 

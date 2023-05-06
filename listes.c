@@ -102,14 +102,9 @@ bool AtePoo(Player* player,Liste *liste){
 //Loads media
 bool loadMedia(char * src);
 
-//Loads individual image as texture
-//SDL_Texture* loadTexture( char * path );
-
-//Current displayed texture
-//SDL_Texture* gTexture = NULL;
-
 //The image we will load and show on the screen
 SDL_Surface* gTextura = NULL;
+SDL_Texture* txtTextura = NULL;
 
 bool loadMedia(char * src)
 {
@@ -137,13 +132,14 @@ void SetBackground(SDL_Renderer * m_renderer, char* src){
         {
             //SDL_CreateSur
             //rectangle = {caca->position.x,caca->position.y,PLAYER_WIDTH,PLAYER_HEIGHT};
-            SDL_Texture* image_surface = SDL_CreateTextureFromSurface(m_renderer, gTextura);
-            SDL_RenderCopy(m_renderer, image_surface, NULL, NULL);
+            txtTextura = SDL_CreateTextureFromSurface(m_renderer, gTextura);
+            SDL_RenderCopy(m_renderer, txtTextura, NULL, NULL);
     }
 }
 
 
 /*
+// Version avec image
 void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
 
     SDL_Rect rectangle;
@@ -166,7 +162,6 @@ void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
 	}
 }
 */
-
 
 void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
     SDL_Rect rectangle;
