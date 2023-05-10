@@ -27,6 +27,7 @@ struct Coleurs{
 
 typedef struct Position Position;
 typedef struct Player Player;
+typedef struct GameStatus Gamestatus;
 
 struct Position{
     int x;
@@ -40,4 +41,12 @@ struct Player{
     int r,g,b;
 };
 
+struct GameStatus{
+    bool isOpen;  // Au moins une fenetre est ouverte
+    bool inMenu;
+    bool inGame;  // En train de jouer
+    int score;
+};
 
+// "Globale" pour les donnés principales du jeu
+Gamestatus gameStatus;

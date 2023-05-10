@@ -5,9 +5,7 @@
 
 #include "defs.h"
 #include "listes.c"
-
-
-
+#include "screens.c"
 
 
 /// @brief Dessine un tableau, c'etait juste un test pour apprendre à utiliser SDL
@@ -121,16 +119,18 @@ int main( int argc, char * argv[] ) {
     derniereP2.y = player2.position.y;
 
     // Config Fenetres
-    bool isOpen = true;
-    bool inGame = false;
-    bool inMenu = true;
+    gameStatus.isOpen = true;
+    gameStatus.inGame = false;
+    gameStatus.inMenu = true;
+
+
 
 
     // DEMARRAGE DE SDL
     if (SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) == -1)    
     {
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError());
-        isOpen = false;
+        gameStatus.isOpen = false;
         exit(EXIT_FAILURE);         
     }
     else{
@@ -144,50 +144,20 @@ int main( int argc, char * argv[] ) {
             SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
        
         SDL_SetWindowTitle(m_window, "CaCOW");
-        //SDL_SetWindowIcon
+        //BONUS : //SDL_SetWindowIcon
 
-        
-        // Afficher le menu initiel
-        while (isOpen && inMenu)
-        { 
-            while (SDL_PollEvent(&events))
-            {
-                switch (events.type)
-                {
-                case SDL_QUIT:
-                    isOpen = false;
-                    break;
-                case SDL_KEYDOWN:
-                    switch (events.key.keysym.sym)
-                    {
-                    case SDLK_ESCAPE:
-                        isOpen = false;
-                        break;
-                    case SDLK_RETURN:  // Si clique dans le button de start
-                        inMenu = false;
-                        inGame = true;
-                    }
-                }
-            }   
-
-            //EXECUÇÃO DO MENU AQUI
-            // Afficher imgage menu
-            SDL_SetRenderDrawColor(m_renderer, 25, 25, 25, 255);
-            SDL_RenderClear(m_renderer);
-            SDL_RenderPresent(m_renderer);
-
-        }
-
+        // Affichage du menu initiel
+        ShowMainMenu(m_renderer);
         
         // Affichage du jeux
-        while (isOpen && inGame)
+        while (gameStatus.isOpen && gameStatus.inGame)
         {        
             while (SDL_PollEvent(&events))
             {
                 // ENTREES
                 switch(events.type){
                     case SDL_QUIT:
-                        isOpen = false;
+                        gameStatus.isOpen = false;
                     break;                    
                     case SDL_KEYDOWN:  // Detection des clés clavier
                         switch(events.key.keysym.sym)
@@ -233,7 +203,7 @@ int main( int argc, char * argv[] ) {
                             break;
 
                             case SDLK_ESCAPE:
-                                isOpen = false;
+                                gameStatus.isOpen = false;
                             break;
                         }      
                 }
@@ -278,7 +248,7 @@ int main( int argc, char * argv[] ) {
                     //|| AtePoo(&player2,CacaP2)
                     )
                 {
-                    isOpen = false;
+                    gameStatus.isOpen = false;
                 }
 
 
@@ -308,7 +278,7 @@ int main( int argc, char * argv[] ) {
     }
 
     // Libération des objets
-    if (isOpen == false){
+    if (gameStatus.isOpen == false){
        SDL_DestroyWindow(m_window);
        SDL_DestroyRenderer(m_renderer);
        SDL_FreeSurface(gTextura);
