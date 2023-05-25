@@ -53,6 +53,7 @@ void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
 }
 
 
+
 void MovePlayer(Player* player){
 
     switch (player->direction)
@@ -97,26 +98,30 @@ int main( int argc, char * argv[] ) {
         Player player1;
         Position derniereP1;
         Liste * CacaP1 = initialisation();
+        player1.direction = RIGHT;
 
         // Position
-        player1.initPos.x = X_INIT_P1;
-        player1.initPos.y = Y_INIT_P1;
-        player1.position = player1.initPos;
-        derniereP1.x = 0;
-        derniereP1.y = 0;
+            player1.initPos.x = X_INIT_P1;
+            player1.initPos.y = Y_INIT_P1;
+            player1.position = player1.initPos;
+
+            derniereP1.x = 0;
+            derniereP1.y = 0;
 
     // PLAYER 2
-    Player player2;
-    Position derniereP2;
-    Liste * CacaP2 = initialisation();
-    player2.position.x = SCREEN_WIDTH - SPEED;
-    player2.position.y = SCREEN_HEIGHT - SPEED;
-    player2.initPos = player2.position;
-    player2.r=255;
-    player2.g=255;
-    player2.b=255;
-    derniereP2.x = player2.position.x;
-    derniereP2.y = player2.position.y;
+        Player player2;
+        Position derniereP2;
+        Liste * CacaP2 = initialisation();
+        player2.direction = LEFT;
+        // Position
+            player2.position.x = SCREEN_WIDTH - SPEED;
+            player2.position.y = SCREEN_HEIGHT - SPEED;
+            player2.initPos = player2.position;
+            player2.r=255;
+            player2.g=255;
+            player2.b=255;
+            derniereP2.x = player2.position.x;
+            derniereP2.y = player2.position.y;
 
     // Config Fenetres
     gameStatus.isOpen = true;
@@ -134,9 +139,7 @@ int main( int argc, char * argv[] ) {
         exit(EXIT_FAILURE);         
     }
     else{
-        // Céation de la fenetre et du renderer
-        //SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN,&m_window, &m_renderer);
-        
+        // Céation de la fenetre et du renderer      
         m_window = SDL_CreateWindow("C-Tron",SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                 SCREEN_WIDTH, SCREEN_HEIGHT,
                 SDL_WINDOW_SHOWN);
@@ -234,7 +237,8 @@ int main( int argc, char * argv[] ) {
                     // Et si la difference est supérieure à width/length de l'objet
                 {
                     if (rand() % 4 + 1 == 1){ // Pas toujours faire caca
-                    insertion(CacaP1,player1.position.x,player1.position.y);
+                        
+                        insertion(CacaP1,player1.position.x,player1.position.y);
                     }
                 }
 
@@ -248,7 +252,12 @@ int main( int argc, char * argv[] ) {
                     //|| AtePoo(&player2,CacaP2)
                     )
                 {
-                    gameStatus.isOpen = false;
+                    //gameStatus.isOpen = false;
+                    gameStatus.gameOver = true;
+                }
+
+                if (gameStatus.gameOver == true){
+                    GameOver(m_renderer);
                 }
 
 
@@ -259,6 +268,7 @@ int main( int argc, char * argv[] ) {
                 
                 SDL_RenderClear(m_renderer);
                 SetBackground(m_renderer,"/IMG/grama.bmp");
+                // Clouds
 
                 // TRAITEMENT                
 

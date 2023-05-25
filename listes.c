@@ -13,7 +13,7 @@ Liste *initialisation()
         exit(EXIT_FAILURE);
     }
 
-    //element->nombre = 0;
+    // Définition des valeurs de démarrage
     element->caca.position.x = 0;
     element->caca.position.y = 0;
     qttCarees = 0;
@@ -27,19 +27,20 @@ Liste *initialisation()
 
 void insertion(Liste *liste, int x, int y)
 {
-    /* CrÈation du nouvel ÈlÈment */
+    // Création du nouvel Élément
     Element *nouveau = malloc(sizeof(*nouveau));
     if (liste == NULL || nouveau == NULL)
     {
         exit(EXIT_FAILURE);
     }
-    //nouveau->caca = newCaca;
+
+    // Définition des valeurs standard
     nouveau->caca.position.x = x;
     nouveau->caca.position.y = y;
+    nouveau->caca.r = 130 + (rand() % (220-130));  // Coleur en aléatoire. Tons de marron
     qttCarees++;
-
     
-    /* Insertion de l'ÈlÈment au dÈbut de la liste */
+    // Insertion de l'ÈlÈment au dÈbut de la liste
     nouveau->suivant = liste->premier;
     liste->premier = nouveau;
 }
@@ -74,7 +75,7 @@ void afficherListe(SDL_Renderer * m_renderer,Liste *liste,SDL_Window * m_window)
         FaireCaca(m_renderer,&actuel->caca,m_window);
         actuel = actuel->suivant;
     }
-    printf("NULL\n");
+    //printf("NULL\n");
 }
 
 bool AtePoo(Player* player,Liste *liste){
@@ -124,16 +125,15 @@ bool loadMedia(char * src)
 }
 
 void SetBackground(SDL_Renderer * m_renderer, char* src){
-    if(!loadMedia(src))
-        {
-            printf( "Failed to load media!\n" );
-        }
-        else
-        {
-            //SDL_CreateSur
-            //rectangle = {caca->position.x,caca->position.y,PLAYER_WIDTH,PLAYER_HEIGHT};
-            txtTextura = SDL_CreateTextureFromSurface(m_renderer, gTextura);
-            SDL_RenderCopy(m_renderer, txtTextura, NULL, NULL);
+    if(!loadMedia(src)){
+        printf( "Failed to load media!\n" );
+    }
+    else{
+        // SDL_RenderClear(m_renderer);
+        txtTextura = SDL_CreateTextureFromSurface(m_renderer, gTextura);
+        SDL_RenderCopy(m_renderer, txtTextura, NULL, NULL);
+        // SDL_RenderPresent(m_renderer);
+        // SDL_DestroyTexture(txtTextura);
     }
 }
 
@@ -167,10 +167,10 @@ void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
     SDL_Rect rectangle;
     int rw = PLAYER_WIDTH;  // Width rectangle
     int rh = PLAYER_HEIGHT;  // Height rectangle
-    int dist = 0; // Distance entre les rectangles
+    int dist = 0;  // Distance entre les rectangles
 
     // Dessiner la caca
-    SDL_SetRenderDrawColor(m_renderer,165,110,59,255);
+    SDL_SetRenderDrawColor(m_renderer,caca->r,110,59,255);
     rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
     SDL_RenderFillRect(m_renderer,&rectangle);
 }

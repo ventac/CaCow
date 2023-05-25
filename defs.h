@@ -45,6 +45,7 @@ struct GameStatus{
     bool isOpen;  // Au moins une fenetre est ouverte
     bool inMenu;
     bool inGame;  // En train de jouer
+    bool gameOver;
     int score;
 };
 
