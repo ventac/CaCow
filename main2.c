@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
+//#include "SDL2/SDL_image.h"
 
 #include "defs.h"
 #include "listes.c"
@@ -93,6 +94,16 @@ int main( int argc, char * argv[] ) {
     SDL_Event events;
     SDL_Rect rectangle;
     SDL_Point point;
+
+    // SPRITES
+    /*
+    SDL_Surface *sprite, *loadSprite;
+    loadSprite = IMG_Load("/IMG/clouds.bmp");
+    sprite = SLD_DisplayFormat(loadSprite);
+*/
+
+
+
     
     // PLAYER 1
         Player player1;
@@ -127,6 +138,10 @@ int main( int argc, char * argv[] ) {
     gameStatus.isOpen = true;
     gameStatus.inGame = false;
     gameStatus.inMenu = true;
+
+
+    // Nouages
+    Position cloudPos;
 
 
 
@@ -247,8 +262,8 @@ int main( int argc, char * argv[] ) {
                 // "Voce comeu seu proprio cocô"
                 if (
                     //AtePoo(&player1,CacaP1) ||
-                    AtePoo(&player1,CacaP2) ||
-                    AtePoo(&player2,CacaP1) 
+                    AtePoo(&player1,CacaP2) ||  // Player 2 ganhou
+                    AtePoo(&player2,CacaP1)     // Player 1 ganhou
                     //|| AtePoo(&player2,CacaP2)
                     )
                 {
@@ -268,6 +283,7 @@ int main( int argc, char * argv[] ) {
                 
                 SDL_RenderClear(m_renderer);
                 SetBackground(m_renderer,"/IMG/grama.bmp");
+                
                 // Clouds
 
                 // TRAITEMENT                
@@ -276,10 +292,16 @@ int main( int argc, char * argv[] ) {
                 //drawGrid(m_renderer);           
                 afficherListe(m_renderer,CacaP2,m_window);                         
                 afficherListe(m_renderer,CacaP1,m_window);
+
+                cloudPos.x++;
+                Clouds(m_renderer,m_window, cloudPos);
+
                 DrawPlayer(m_renderer, &player2); 
                 DrawPlayer(m_renderer, &player1);           
                 
                 SDL_Delay(DELAY);
+
+                //SLD_BlitSurface(sprite,NULL,m_renderer,NULL);
                 
                 // AFFICHAGE                
                 SDL_RenderPresent(m_renderer); // mise à jour de la fenêtre PRESENTER

@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "liste_chainee.h"
+//#include <SDL2/SDL_image.h>
+
 
 
 Liste *initialisation()
@@ -160,14 +162,26 @@ void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
         SDL_Texture* image_surface = SDL_CreateTextureFromSurface(m_renderer, gTextura);
         SDL_RenderCopy(m_renderer, image_surface, NULL, &rectangle);
 	}
+}*/
+
+void Clouds(SDL_Renderer * m_renderer, SDL_Window * m_window, Position cloudPos){
+
+    SDL_Rect rectangle;
+
+    if(!loadMedia("/IMG/clouds.bmp"))
+    {
+        printf( "Failed to load media!\n" );
+    }
+    else
+    {
+        rectangle.x = cloudPos.x; rectangle.y = 30; rectangle.w = SCREEN_WIDTH/*2*/; rectangle.h = SCREEN_HEIGHT;
+        SDL_Texture* image_surface = SDL_CreateTextureFromSurface(m_renderer, gTextura);
+        SDL_RenderCopy(m_renderer, image_surface, NULL, &rectangle);
+	}
 }
-*/
 
 void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
     SDL_Rect rectangle;
-    int rw = PLAYER_WIDTH;  // Width rectangle
-    int rh = PLAYER_HEIGHT;  // Height rectangle
-    int dist = 0;  // Distance entre les rectangles
 
     // Dessiner la caca
     SDL_SetRenderDrawColor(m_renderer,caca->r,110,59,255);

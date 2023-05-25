@@ -21,7 +21,7 @@ void suppression(Liste *liste);
 void afficherListe(SDL_Renderer * m_renderer, Liste *liste, SDL_Window* m_window);
 void FaireCaca(SDL_Renderer * m_renderer, Player* player, SDL_Window* m_window);
 void SetBackground(SDL_Renderer * m_renderer, char* src);
-
+void Clouds(SDL_Renderer * m_renderer, SDL_Window * m_window, Position cloudPos);
 
 
 

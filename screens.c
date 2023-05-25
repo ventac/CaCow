@@ -3,8 +3,6 @@
 #include "defs.h"
 #include "liste_chainee.h"
 
-
-
 //The image we will load and show on the screen
 
 
@@ -125,3 +123,6 @@ void GetReady(SDL_Renderer * m_renderer){
 
     }
 }
+
+
+//void loadSprite(){}
