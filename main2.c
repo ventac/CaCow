@@ -2,12 +2,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
-//#include "SDL2/SDL_image.h"
-
 #include "defs.h"
 #include "listes.c"
 #include "screens.c"
-
+// Audio
+// https://gigi.nullneuron.net/gigilabs/playing-a-wav-file-using-sdl2/
 
 /// @brief Dessine un tableau, c'etait juste un test pour apprendre à utiliser SDL
 /// @param m_renderer 
@@ -101,9 +100,10 @@ int main( int argc, char * argv[] ) {
     loadSprite = IMG_Load("/IMG/clouds.bmp");
     sprite = SLD_DisplayFormat(loadSprite);
 */
+    SDL_AudioDeviceID deviceId;
+    Uint8 *wavBuffer;
 
-
-
+    
     
     // PLAYER 1
         Player player1;
@@ -147,7 +147,7 @@ int main( int argc, char * argv[] ) {
 
 
     // DEMARRAGE DE SDL
-    if (SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) == -1)    
+    if (SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) == -1)    
     {
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError());
         gameStatus.isOpen = false;
@@ -166,6 +166,27 @@ int main( int argc, char * argv[] ) {
 
         // Affichage du menu initiel
         ShowMainMenu(m_renderer);
+
+        // Music
+        // load WAV file
+        SDL_AudioSpec wavSpec;
+        Uint32 wavLength;
+        
+
+        SDL_LoadWAV("/Music/cow.wav", &wavSpec, &wavBuffer, &wavLength);
+
+        // open audio device 
+        deviceId = SDL_OpenAudioDevice(NULL, 0, &wavSpec, NULL, 0);
+
+
+        // play audio    
+        int success = SDL_QueueAudio(deviceId, wavBuffer, wavLength);
+        SDL_PauseAudioDevice(deviceId, 0);
+
+
+
+
+
         
         // Affichage du jeux
         while (gameStatus.isOpen && gameStatus.inGame)
@@ -311,6 +332,8 @@ int main( int argc, char * argv[] ) {
 
     // Libération des objets
     if (gameStatus.isOpen == false){
+       SDL_CloseAudioDevice(deviceId);
+       SDL_FreeWAV(wavBuffer);
        SDL_DestroyWindow(m_window);
        SDL_DestroyRenderer(m_renderer);
        SDL_FreeSurface(gTextura);

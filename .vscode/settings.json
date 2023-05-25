@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "defs.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "liste_chainee.h": "c"
     }
 }
