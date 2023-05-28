@@ -40,7 +40,7 @@ void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
     SDL_RenderFillRect(m_renderer,&rectangle);
 }
 */
-
+/*
 void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
     SDL_Rect rectangle;
     int rw = PLAYER_WIDTH;  // Width rectangle
@@ -51,7 +51,60 @@ void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
     rectangle.x = player->position.x; rectangle.y = player->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
     SDL_RenderFillRect(m_renderer,&rectangle);
 }
+*/
 
+// Version avec Sprite
+void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
+    SDL_Rect rectangle;
+    int rw = PLAYER_WIDTH;  // Width rectangle
+    int rh = PLAYER_HEIGHT;  // Height rectangle
+    int dist = 0;  // Distance entre les rectangles
+    
+    char* directionPlayer;
+    char cheminPlayer[] = "/IMG/Players/cow_Player_";
+    char formatImage [] = ".bmp";
+    char cheminFinal [50];  // 255 = Taille max pour les fichiers
+    char* cheminFinal2 [4];
+
+    int correction_x, correction_y;
+
+    switch (player->direction)
+    {
+    case UP:
+        directionPlayer = "U_";
+        break;
+    case DOWN:
+        directionPlayer = "D_";
+        break;
+    case RIGHT:
+        directionPlayer = "R_";
+        break;
+    case LEFT:
+        directionPlayer = "L_";
+        break;    
+    default:
+        NULL;
+        break;
+    }
+
+    strcpy(cheminFinal, cheminPlayer);
+    strcat(cheminFinal, directionPlayer);
+    strcat(cheminFinal, player->personnage);
+    strcat(cheminFinal, formatImage);
+    
+    if(!loadMedia(cheminFinal))
+    {
+        printf( "Failed to load media!\n" );
+    }
+    else
+    {
+        // Le -5 sert à mettre l'image au milieu
+        rectangle.x = player->position.x - 15; rectangle.y = player->position.y - 15; 
+        rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
+        SDL_Texture* image_surface = SDL_CreateTextureFromSurface(m_renderer, gTextura);
+        SDL_RenderCopy(m_renderer, image_surface, NULL, &rectangle);
+	}
+}
 
 
 void MovePlayer(Player* player){
@@ -81,9 +134,9 @@ void MovePlayer(Player* player){
     }else if(player->position.y < 0){
         player->position.y = 0;
     }else if(player->position.x + PLAYER_WIDTH > SCREEN_WIDTH){
-        player->position.x = SCREEN_WIDTH - SPEED;  // 10 est la taille carré
+        player->position.x = SCREEN_WIDTH - PLAYER_WIDTH+2;  // 10 est la taille carré
     }else if(player->position.y + PLAYER_HEIGHT > SCREEN_HEIGHT){
-        player->position.y = SCREEN_HEIGHT - SPEED;
+        player->position.y = SCREEN_HEIGHT - PLAYER_HEIGHT+2;
     }
 }
 
@@ -109,7 +162,7 @@ int main( int argc, char * argv[] ) {
         Player player1;
         Position derniereP1;
         Liste * CacaP1 = initialisation();
-        player1.direction = RIGHT;
+        player1.direction = RIGHT;  // Direction initielle
 
         // Position
             player1.initPos.x = X_INIT_P1;
@@ -119,11 +172,15 @@ int main( int argc, char * argv[] ) {
             derniereP1.x = 0;
             derniereP1.y = 0;
 
+        // Coleur
+        player1.personnage = "Black";
+
+
     // PLAYER 2
         Player player2;
         Position derniereP2;
         Liste * CacaP2 = initialisation();
-        player2.direction = LEFT;
+        player2.direction = LEFT;  // Direction initielle
         // Position
             player2.position.x = SCREEN_WIDTH - SPEED;
             player2.position.y = SCREEN_HEIGHT - SPEED;
@@ -133,6 +190,10 @@ int main( int argc, char * argv[] ) {
             player2.b=255;
             derniereP2.x = player2.position.x;
             derniereP2.y = player2.position.y;
+
+            // Coleur
+            player2.personnage = "BrownBull";
+
 
     // Config Fenetres
     gameStatus.isOpen = true;
@@ -293,6 +354,7 @@ int main( int argc, char * argv[] ) {
                 }
 
                 if (gameStatus.gameOver == true){
+                    SDL_PauseAudioDevice(deviceId, 1);
                     GameOver(m_renderer);
                 }
 
@@ -312,13 +374,13 @@ int main( int argc, char * argv[] ) {
                 // Grid
                 //drawGrid(m_renderer);           
                 afficherListe(m_renderer,CacaP2,m_window);                         
-                afficherListe(m_renderer,CacaP1,m_window);
-
-                cloudPos.x++;
-                Clouds(m_renderer,m_window, cloudPos);
+                afficherListe(m_renderer,CacaP1,m_window);                
 
                 DrawPlayer(m_renderer, &player2); 
-                DrawPlayer(m_renderer, &player1);           
+                DrawPlayer(m_renderer, &player1);    
+
+                cloudPos.x++;
+                Clouds(m_renderer,m_window,cloudPos);       
                 
                 SDL_Delay(DELAY);
 
