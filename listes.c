@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "liste_chainee.h"
-#include <SDL2_image/SDL_image.h>
+//#include <SDL2_image/SDL_image.h>
 
 
 Liste *initialisation()
@@ -172,18 +172,35 @@ void Clouds(SDL_Renderer * m_renderer, SDL_Window * m_window, Position cloudPos)
         printf( "Failed to load media!\n" );
     }
     else
-    {
-        rectangle.x = cloudPos.x; rectangle.y = 30; rectangle.w = SCREEN_WIDTH/*2*/; rectangle.h = SCREEN_HEIGHT;
+    {        
+        rectangle.x = cloudPos.x; rectangle.y = 30; 
+        rectangle.w = SCREEN_WIDTH; rectangle.h = SCREEN_HEIGHT;
         SDL_Texture* image_surface = SDL_CreateTextureFromSurface(m_renderer, gTextura);
         SDL_RenderCopy(m_renderer, image_surface, NULL, &rectangle);
+
+        // Retour des nouages si a la fin
+        if (cloudPos.x > SCREEN_WIDTH){
+            cloudPos.x = 0;
+        }
+
 	}
 }
 
 void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
     SDL_Rect rectangle;
 
-    // Dessiner la caca
+    // Ombre
     SDL_SetRenderDrawColor(m_renderer,caca->r,110,59,255);
-    rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
+    rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = PLAYER_WIDTH/4; rectangle.h = PLAYER_HEIGHT/4;
     SDL_RenderFillRect(m_renderer,&rectangle);
+
+    // Coleur
+    // SDL_SetRenderDrawColor(m_renderer,caca->r,110,59,255);
+    // rectangle.x = caca->position.x + 1; rectangle.y = caca->position.y + 3; rectangle.w = (PLAYER_WIDTH/2)-2; rectangle.h = PLAYER_HEIGHT/4;
+    // SDL_RenderFillRect(m_renderer,&rectangle);
+
+    // // Brille
+    // SDL_SetRenderDrawColor(m_renderer,caca->r+30,110+30,59+30,255);
+    // rectangle.x = caca->position.x; rectangle.y = caca->position.y + 3; rectangle.w = PLAYER_WIDTH/2; rectangle.h = 1;
+    // SDL_RenderFillRect(m_renderer,&rectangle);
 }

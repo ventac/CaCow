@@ -2,6 +2,7 @@
     "files.associations": {
         "defs.h": "c",
         "stdbool.h": "c",
-        "liste_chainee.h": "c"
+        "liste_chainee.h": "c",
+        "sstream": "c"
     }
 }

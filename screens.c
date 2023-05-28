@@ -123,6 +123,3 @@ void GetReady(SDL_Renderer * m_renderer){
 
     }
 }
-
-
-//void loadSprite(){}
