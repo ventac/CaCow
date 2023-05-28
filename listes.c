@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "liste_chainee.h"
-//#include <SDL2_image.h>
+#include <SDL2_image/SDL_image.h>
+
 
 Liste *initialisation()
 {
