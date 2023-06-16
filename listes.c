@@ -87,11 +87,18 @@ bool AtePoo(Player* player,Liste *liste){
     
     while (actuel != NULL)
     {
-        if (((player->position.x == actuel->caca.position.x)
-         && (player->position.y == actuel->caca.position.y))
-         && 
-         ((player->position.x != player->initPos.x)
-         && (player->position.y != player->initPos.y)))  // et la position est differente de l'initialle
+        if 
+        (((
+            ((player->position.x >= actuel->caca.position.x) 
+            && (player->position.x <= (actuel->caca.position.x + CACA_WIDTH)))       
+        )
+        && 
+            ((player->position.y >= actuel->caca.position.y) 
+            && player->position.y <= (actuel->caca.position.y + CACA_HEIGHT)))
+        && 
+            ((player->position.x != player->initPos.x)
+            && (player->position.y != player->initPos.y  // et la position est differente de l'initialle
+        ))) 
         
          {
             return true;
@@ -178,11 +185,15 @@ void Clouds(SDL_Renderer * m_renderer, SDL_Window * m_window, Position cloudPos)
         SDL_Texture* image_surface = SDL_CreateTextureFromSurface(m_renderer, gTextura);
         SDL_RenderCopy(m_renderer, image_surface, NULL, &rectangle);
 
-        // Retour des nouages si a la fin
-        if (cloudPos.x > SCREEN_WIDTH){
-            cloudPos.x = 0;
-        }
+        //SDL_SetRenderDrawColor(m_renderer,30,110,59,255);
+        //rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = PLAYER_WIDTH/4; rectangle.h = PLAYER_HEIGHT/4;
+        //SDL_RenderFillRect(m_renderer,&rectangle);
+        //SDL_RenderPresent(m_renderer);
 
+        // Retour des nouages si a la fin
+        // if (cloudPos.x > SCREEN_WIDTH){
+        //     cloudPos.x = 0;
+        // }
 	}
 }
 
@@ -191,16 +202,7 @@ void FaireCaca(SDL_Renderer * m_renderer, Player* caca, SDL_Window * m_window){
 
     // Ombre
     SDL_SetRenderDrawColor(m_renderer,caca->r,110,59,255);
-    rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = PLAYER_WIDTH/4; rectangle.h = PLAYER_HEIGHT/4;
+    rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = CACA_WIDTH; rectangle.h = CACA_HEIGHT;
     SDL_RenderFillRect(m_renderer,&rectangle);
 
-    // Coleur
-    // SDL_SetRenderDrawColor(m_renderer,caca->r,110,59,255);
-    // rectangle.x = caca->position.x + 1; rectangle.y = caca->position.y + 3; rectangle.w = (PLAYER_WIDTH/2)-2; rectangle.h = PLAYER_HEIGHT/4;
-    // SDL_RenderFillRect(m_renderer,&rectangle);
-
-    // // Brille
-    // SDL_SetRenderDrawColor(m_renderer,caca->r+30,110+30,59+30,255);
-    // rectangle.x = caca->position.x; rectangle.y = caca->position.y + 3; rectangle.w = PLAYER_WIDTH/2; rectangle.h = 1;
-    // SDL_RenderFillRect(m_renderer,&rectangle);
 }

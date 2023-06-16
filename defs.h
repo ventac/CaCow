@@ -5,6 +5,8 @@
 #define SCREEN_HEIGHT  600
 #define PLAYER_WIDTH   40  // (avant = 20)
 #define PLAYER_HEIGHT  40  // (avant = 20)
+#define CACA_WIDTH 10
+#define CACA_HEIGHT 10
 #define SPEED 12  // Distance entre pas (avant = 12)
 #define DELAY 100
 #define UP 1
@@ -14,6 +16,7 @@
 #define N_FRAMES_PER_MOVEMENT 12
 #define X_INIT_P1 0
 #define Y_INIT_P1 0
+#define TOTAL_PERSOS_DISPO 2
 
 
 
@@ -38,6 +41,7 @@ struct Player{
     Position initPos;
     Position position;
     char* personnage;
+    int cowNo;  // Le numéro de la vache
     int direction;
     int r,g,b;
 };
@@ -47,6 +51,7 @@ struct GameStatus{
     bool inMenu;
     bool inGame;  // En train de jouer
     bool gameOver;
+    bool pickingTheCow;
     int score;
 };
 

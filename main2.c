@@ -8,6 +8,7 @@
 // Audio
 // https://gigi.nullneuron.net/gigilabs/playing-a-wav-file-using-sdl2/
 
+/*
 /// @brief Dessine un tableau, c'etait juste un test pour apprendre à utiliser SDL
 /// @param m_renderer 
 void drawGrid(SDL_Renderer * m_renderer){
@@ -27,19 +28,8 @@ void drawGrid(SDL_Renderer * m_renderer){
         ligne+=rh - dist;
     }
 }
-
-/*
-void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
-    SDL_Rect rectangle;
-    int rw = PLAYER_WIDTH;  // Width rectangle
-    int rh = PLAYER_HEIGHT;  // Height rectangle
-    int dist = 0; // Distance entre les rectangles
-
-    SDL_SetRenderDrawColor(m_renderer,player->r,player->g,player->b,255);
-    rectangle.x = player->position.x; rectangle.y = player->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
-    SDL_RenderFillRect(m_renderer,&rectangle);
-}
 */
+
 /*
 void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
     SDL_Rect rectangle;
@@ -152,11 +142,10 @@ int main( int argc, char * argv[] ) {
     SDL_Surface *sprite, *loadSprite;
     loadSprite = IMG_Load("/IMG/clouds.bmp");
     sprite = SLD_DisplayFormat(loadSprite);
-*/
-    SDL_AudioDeviceID deviceId;
-    Uint8 *wavBuffer;
+    */
 
-    
+    SDL_AudioDeviceID deviceId;
+    Uint8 *wavBuffer;  
     
     // PLAYER 1
         Player player1;
@@ -227,6 +216,11 @@ int main( int argc, char * argv[] ) {
 
         // Affichage du menu initiel
         ShowMainMenu(m_renderer);
+        gameStatus.pickingTheCow = true;
+        
+        if (gameStatus.pickingTheCow  == true){
+            PickACow(m_renderer);
+        }
 
         // Music
         // load WAV file
@@ -339,7 +333,7 @@ int main( int argc, char * argv[] ) {
                     }
                 }
 
-                // Colision avec la caca
+                // Colision avec le caca
                 // Se jogador p1 comeu cocô p1
                 // "Voce comeu seu proprio cocô"
                 if (
