@@ -43,6 +43,10 @@ void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
 }
 */
 
+
+
+
+
 // Version avec Sprite
 void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
     SDL_Rect rectangle;
@@ -148,7 +152,7 @@ int main( int argc, char * argv[] ) {
     Uint8 *wavBuffer;  
     
     // PLAYER 1
-        Player player1;
+        //Player player1;
         Position derniereP1;
         Liste * CacaP1 = initialisation();
         player1.direction = RIGHT;  // Direction initielle
@@ -162,11 +166,11 @@ int main( int argc, char * argv[] ) {
             derniereP1.y = 0;
 
         // Coleur
-        player1.personnage = "Black";
+        player1.personnage = "BrownBull";
 
 
     // PLAYER 2
-        Player player2;
+        //Player player2;
         Position derniereP2;
         Liste * CacaP2 = initialisation();
         player2.direction = LEFT;  // Direction initielle

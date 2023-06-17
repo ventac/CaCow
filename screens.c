@@ -1,9 +1,10 @@
-
+//#include "listes.c"
 #include "stdbool.h"
 #include "defs.h"
 #include "liste_chainee.h"
 
 //The image we will load and show on the screen
+Player player1, player2;
 
 
 // Afficher le menu initiel
@@ -54,28 +55,34 @@ char* GetPickACowPhoto(int choix, int playerNo){
     {
     case 0:
         if (playerNo == 1){  // Modifier l'image de chaque player individuallement
-            cheminImage = "/IMG/Players/cow_Player_Selection_BrownBull_P1.bmp";
+            cheminImage = "/IMG/Players/cow_Player_Selection_BrownBull_P1.bmp";            
+            player1.personnage = "BrownBull";  // Definir le nom du personnage dans le player
             // Animation ici
         }else{
             cheminImage = "/IMG/Players/cow_Player_Selection_BrownBull_P2.bmp";
+            player2.personnage = "BrownBull";  // Definir le nom du personnage dans le player
         }        
         break;
     case 1:
         if (playerNo == 1){  // Modifier l'image de chaque player individuallement
             cheminImage = "/IMG/Players/cow_Player_Selection_Black_P1.bmp";
+            player1.personnage = "Black";  
         }else{
             cheminImage = "/IMG/Players/cow_Player_Selection_Black_P2.bmp";
+            player2.personnage = "Black";  
         }    
         break;
     case 2:
-        /* code */
+        if (playerNo == 1){  // Modifier l'image de chaque player individuallement
+            cheminImage = "/IMG/Players/cow_Player_Selection_Malhada_P1.bmp";
+            player1.personnage = "Malhada";  
+        }else{
+            cheminImage = "/IMG/Players/cow_Player_Selection_Malhada_P2.bmp";
+            player2.personnage = "Malhada";  
+        }    
         break;    
     default:
-        if (playerNo == 1){  // Modifier l'image de chaque player individuallement
-            cheminImage = "/IMG/Players/cow_Player_Selection_BrownBull_P1.bmp";
-        }else{
-            cheminImage = "/IMG/Players/cow_Player_Selection_BrownBull_P2.bmp";
-        }        
+        NULL; 
         break;
     }
 
@@ -90,6 +97,8 @@ void PickACow(SDL_Renderer * m_renderer){
     int playerActifP1 = 0;
     int playerActifP2 = 0;
     bool choixPerso = true;
+
+    
 
     while (gameStatus.isOpen && gameStatus.pickingTheCow)
     { 

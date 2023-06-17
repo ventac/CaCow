@@ -185,11 +185,6 @@ void Clouds(SDL_Renderer * m_renderer, SDL_Window * m_window, Position cloudPos)
         SDL_Texture* image_surface = SDL_CreateTextureFromSurface(m_renderer, gTextura);
         SDL_RenderCopy(m_renderer, image_surface, NULL, &rectangle);
 
-        //SDL_SetRenderDrawColor(m_renderer,30,110,59,255);
-        //rectangle.x = caca->position.x; rectangle.y = caca->position.y; rectangle.w = PLAYER_WIDTH/4; rectangle.h = PLAYER_HEIGHT/4;
-        //SDL_RenderFillRect(m_renderer,&rectangle);
-        //SDL_RenderPresent(m_renderer);
-
         // Retour des nouages si a la fin
         // if (cloudPos.x > SCREEN_WIDTH){
         //     cloudPos.x = 0;

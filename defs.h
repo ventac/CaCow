@@ -19,6 +19,8 @@
 #define TOTAL_PERSOS_DISPO 2
 
 
+// Déclaration des players ici pour pas rénvoyer tout le temps comme paramètre
+//Player player1, player2;
 
 /*
 struct Coleurs{
