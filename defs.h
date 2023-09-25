@@ -7,7 +7,7 @@
 #define PLAYER_HEIGHT  40  // (avant = 20)
 #define CACA_WIDTH 10
 #define CACA_HEIGHT 10
-#define SPEED 12  // Distance entre pas (avant = 12)
+#define SPEED 10  // Distance entre pas (avant = 12)
 #define DELAY 100
 #define UP 1
 #define DOWN 2

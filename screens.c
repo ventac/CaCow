@@ -186,7 +186,7 @@ void PickACow(SDL_Renderer * m_renderer){
 }
 
 
-void GameOver(SDL_Renderer * m_renderer){
+void GameOver(SDL_Renderer * m_renderer, int loser){
  // Afficher le menu initiel
     SDL_Event events;
     gameStatus.inGame = false;
@@ -217,7 +217,11 @@ void GameOver(SDL_Renderer * m_renderer){
         // Afficher imgage menu
         //SDL_SetRenderDrawColor(m_renderer, 255, 25, 25, 255);
         SDL_RenderClear(m_renderer);
-        SetBackground(m_renderer,"/IMG/gameOver.bmp");
+        if (loser == 1){
+            SetBackground(m_renderer,"/IMG/Screens/GameOver_P2.bmp");
+        }else{
+            SetBackground(m_renderer,"/IMG/Screens/GameOver_P1.bmp");
+        }        
         SDL_RenderPresent(m_renderer);
     }
 }

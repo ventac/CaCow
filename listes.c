@@ -79,6 +79,63 @@ void afficherListe(SDL_Renderer * m_renderer,Liste *liste,SDL_Window * m_window)
     //printf("NULL\n");
 }
 
+
+// Essai de detecter le prochain mouvement pour toucher le trai de l'autre player
+
+bool AtePoo(Player* player,Liste *liste){
+    if (liste == NULL)    
+        exit(EXIT_FAILURE);
+
+    Element *actuel = liste->premier;
+
+    // Détecter le prochain mouvement
+    int next_X = 0;
+    int next_Y = 0;
+
+    switch (player->direction)
+    {
+    case UP:
+        next_Y = SPEED;  // Trocar por CACA_WIDTH se for mto        
+        break;
+    case DOWN:
+        next_Y = - SPEED;
+        break;
+    case LEFT:
+        next_X = - SPEED;
+        break;
+    case RIGHT:
+        next_X = SPEED;
+        break;       
+    default:
+        NULL;
+        break;
+    }
+    
+    while (actuel != NULL)
+    {
+        if 
+        (
+                ((player->position.x + next_X >= actuel->caca.position.x) 
+                && (player->position.x + next_X <= actuel->caca.position.x + CACA_WIDTH))
+            && 
+                ((player->position.y + next_Y >= actuel->caca.position.y) 
+                && (player->position.y + next_Y <= actuel->caca.position.y + CACA_HEIGHT))
+            && 
+                ((player->position.x != player->initPos.x)
+                && (player->position.y != player->initPos.y)))  // et la position est differente de l'initialle
+        {
+            return true;  // La vache a mangée le truc
+        }
+        actuel = actuel->suivant;
+    }
+    return false;  // La vache n'a pas mangé le truc
+}
+
+
+// Backup AtePoo
+
+
+/*
 bool AtePoo(Player* player,Liste *liste){
     if (liste == NULL)    
         exit(EXIT_FAILURE);
@@ -107,6 +164,14 @@ bool AtePoo(Player* player,Liste *liste){
     }
     return false;
 }
+
+
+*/
+
+
+
+
+
 
 //Loads media
 bool loadMedia(char * src);

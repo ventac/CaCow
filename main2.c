@@ -8,46 +8,7 @@
 // Audio
 // https://gigi.nullneuron.net/gigilabs/playing-a-wav-file-using-sdl2/
 
-/*
-/// @brief Dessine un tableau, c'etait juste un test pour apprendre à utiliser SDL
-/// @param m_renderer 
-void drawGrid(SDL_Renderer * m_renderer){
-    // Définir la taille des carrés :
-    SDL_Rect rectangle;
-    int rw = 10;  // Width rectangle
-    int rh = 10;  // Height rectangle
-    int dist = 1; // Distance entre les rectangles (1 pour éffacer l'espace entre blocks)
-
-    for (int ligne = 0; ligne < SCREEN_WIDTH;ligne++){
-        for (int col = 0; col < SCREEN_HEIGHT;col++){
-            SDL_SetRenderDrawColor(m_renderer,240,240,240,255);
-            rectangle.x = ligne; rectangle.y = col; rectangle.w = 10; rectangle.h = 10;
-            SDL_RenderFillRect(m_renderer,&rectangle);
-            col+=rw - dist; // -1 pour éffacer l'espace entre blocks
-        }
-        ligne+=rh - dist;
-    }
-}
-*/
-
-/*
-void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
-    SDL_Rect rectangle;
-    int rw = PLAYER_WIDTH;  // Width rectangle
-    int rh = PLAYER_HEIGHT;  // Height rectangle
-    int dist = 0; // Distance entre les rectangles
-
-    SDL_SetRenderDrawColor(m_renderer,player->r,player->g,player->b,255);
-    rectangle.x = player->position.x; rectangle.y = player->position.y; rectangle.w = PLAYER_WIDTH; rectangle.h = PLAYER_HEIGHT;
-    SDL_RenderFillRect(m_renderer,&rectangle);
-}
-*/
-
-
-
-
-
-// Version avec Sprite
+// Version avec "Sprite"
 void DrawPlayer(SDL_Renderer * m_renderer, Player* player){
     SDL_Rect rectangle;
     int rw = PLAYER_WIDTH;  // Width rectangle
@@ -197,7 +158,8 @@ int main( int argc, char * argv[] ) {
     // Nouages
     Position cloudPos;
 
-
+    // Pour savoir qui a perdu
+    int loser = 0;
 
 
     // DEMARRAGE DE SDL
@@ -340,6 +302,7 @@ int main( int argc, char * argv[] ) {
                 // Colision avec le caca
                 // Se jogador p1 comeu cocô p1
                 // "Voce comeu seu proprio cocô"
+                /*
                 if (
                     //AtePoo(&player1,CacaP1) ||
                     AtePoo(&player1,CacaP2) ||  // Player 2 ganhou
@@ -349,11 +312,25 @@ int main( int argc, char * argv[] ) {
                 {
                     //gameStatus.isOpen = false;
                     gameStatus.gameOver = true;
+                }*/
+
+                // Prochaine position
+
+
+
+                if (AtePoo(&player1,CacaP2)){//||AtePoo(&player1,CacaP1)) {  // Detecter son propre truc
+                    loser = 1;
+                    gameStatus.gameOver = true;
                 }
+                 if (AtePoo(&player2,CacaP1)){
+                    loser = 2;
+                    gameStatus.gameOver = true;
+                }
+
 
                 if (gameStatus.gameOver == true){
                     SDL_PauseAudioDevice(deviceId, 1);
-                    GameOver(m_renderer);
+                    GameOver(m_renderer, loser);
                 }
 
 
